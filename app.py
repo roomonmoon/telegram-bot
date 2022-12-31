@@ -15,7 +15,7 @@ dp = Dispatcher(bot=bot)
 async def start_handler(message: types.Message):
     user_id = message.from_user.id
     full_name = message.from_user.full_name
-    logging.info()
+    logging.info(f'{message.text}')
 
     await message.reply(f'Привет, {full_name}!')
 
