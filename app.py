@@ -1,12 +1,11 @@
+from data import TOKEN
+
 import time
 import logging
 
 from aiogram import Bot, Dispatcher, executor, types 
 
 logging.basicConfig(level=logging.INFO)
-
-
-TOKEN = "5837249795:AAHQn_Y4bNim-y1e2wa7UeTXRgiYjoQL9KI"
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot)
