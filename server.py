@@ -1,6 +1,6 @@
-import time
-import logging
 import asyncio
+import logging
+import time
 import os
 
 from aiogram import Bot, Dispatcher, executor, types 
@@ -8,15 +8,17 @@ from aiogram.types import ReplyKeyboardRemove, ReplyKeyboardMarkup, KeyboardButt
 
 logging.basicConfig(level=logging.INFO)
 
-TOKEN = os.getenv('TOKEN')
+APP_TOKEN = str(os.getenv('APP_TOKEN'))
 
-bot = Bot(token=TOKEN)
+bot = Bot(token=str(APP_TOKEN))
 dp = Dispatcher(bot=bot)
 
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
-    await message.answer(f"Привет, {message.from_user.full_name} 😍")
+    logging.info(f'User: {message.from_user.id}; Fullname: {message.from_user.full_name}; Message: {message.text}; Time: {time.asctime()};')
+    await message.answer(f"Привет, {message.from_user.full_name}!")
+
 
 if __name__ == "__main__":
-    executor.start_polling(dp, skip_updates=True )
+    executor.start_polling(dp, skip_updates=True)
