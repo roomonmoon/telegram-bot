@@ -1,2 +1,3 @@
-data.py
-.venv
+.venv/
+.env
+__pycache__
