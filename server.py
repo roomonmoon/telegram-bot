@@ -18,6 +18,7 @@ dp = Dispatcher(bot=bot)
 async def process_start_command(message: types.Message):
     logging.info(f'User: {message.from_user.id}; Fullname: {message.from_user.full_name}; Message: {message.text}; Time: {time.asctime()};')
     await message.answer(f"Привет, {message.from_user.full_name}!")
+    pass
 
 
 if __name__ == "__main__":
