@@ -1,11 +1,10 @@
-import logging, time
 from aiogram.utils import executor
 from instances import dp
 from handlers import client, admin, other
 
 
 async def on_startup(_):
-    logging.info('Bot online')
+    print('BOT ONLINE')
 
 
 def handlers():
