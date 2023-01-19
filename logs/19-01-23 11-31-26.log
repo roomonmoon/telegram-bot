@@ -1,0 +1,56 @@
+DEBUG 19/01/2023 11:31:26 Using proactor: IocpProactor
+DEBUG 19/01/2023 11:31:26 Make request: "getMe" with data: "{}" and files "None"
+DEBUG 19/01/2023 11:31:26 Response for getMe: [200] "'{"ok":true,"result":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot","can_join_groups":true,"can_read_all_group_messages":false,"supports_inline_queries":false}}'"
+INFO 19/01/2023 11:31:27 Bot: TestBot6661123 [@testbot6661123Bot]
+DEBUG 19/01/2023 11:31:27 Make request: "getWebhookInfo" with data: "{}" and files "None"
+DEBUG 19/01/2023 11:31:27 Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+DEBUG 19/01/2023 11:31:27 Make request: "deleteWebhook" with data: "{'drop_pending_updates': True}" and files "None"
+DEBUG 19/01/2023 11:31:27 Response for deleteWebhook: [200] "'{"ok":true,"result":true,"description":"Webhook is already deleted"}'"
+WARNING 19/01/2023 11:31:27 Updates were skipped successfully.
+INFO 19/01/2023 11:31:27 Bot online
+INFO 19/01/2023 11:31:27 Start polling.
+DEBUG 19/01/2023 11:31:27 Make request: "getWebhookInfo" with data: "{}" and files "None"
+DEBUG 19/01/2023 11:31:27 Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+DEBUG 19/01/2023 11:31:27 Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:31:47 Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG 19/01/2023 11:31:47 Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:03 Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":704089111,\n"message":{"message_id":403,"from":{"id":5277925980,"is_bot":false,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","language_code":"ru"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117115,"text":"/quit","entities":[{"offset":0,"length":5,"type":"bot_command"}]}}]}'"
+DEBUG 19/01/2023 11:32:03 Received 1 updates.
+INFO 19/01/2023 11:32:03 User: 5277925980; Fullname: 🌚; Message: /quit;
+DEBUG 19/01/2023 11:32:03 Make request: "sendMessage" with data: "{'chat_id': 5277925980, 'text': 'Привет, 🌚! Это команда /quit'}" and files "None"
+DEBUG 19/01/2023 11:32:03 Make request: "getUpdates" with data: "{'offset': 704089112, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:03 Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":404,"from":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117115,"text":"\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442, \\ud83c\\udf1a! \\u042d\\u0442\\u043e \\u043a\\u043e\\u043c\\u0430\\u043d\\u0434\\u0430 /quit","entities":[{"offset":24,"length":5,"type":"bot_command"}]}}'"
+DEBUG 19/01/2023 11:32:05 Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":704089112,\n"message":{"message_id":405,"from":{"id":5277925980,"is_bot":false,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","language_code":"ru"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117117,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}'"
+DEBUG 19/01/2023 11:32:05 Received 1 updates.
+INFO 19/01/2023 11:32:05 User: 5277925980; Fullname: 🌚; Message: /start;
+DEBUG 19/01/2023 11:32:05 Make request: "sendMessage" with data: "{'chat_id': 5277925980, 'text': 'Привет, 🌚! Это команда /start'}" and files "None"
+DEBUG 19/01/2023 11:32:05 Make request: "getUpdates" with data: "{'offset': 704089113, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:05 Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":406,"from":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117117,"text":"\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442, \\ud83c\\udf1a! \\u042d\\u0442\\u043e \\u043a\\u043e\\u043c\\u0430\\u043d\\u0434\\u0430 /start","entities":[{"offset":24,"length":6,"type":"bot_command"}]}}'"
+DEBUG 19/01/2023 11:32:26 Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG 19/01/2023 11:32:26 Make request: "getUpdates" with data: "{'offset': 704089113, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:38 Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":704089113,\n"message":{"message_id":407,"from":{"id":5277925980,"is_bot":false,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","language_code":"ru"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117150,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}'"
+DEBUG 19/01/2023 11:32:38 Received 1 updates.
+INFO 19/01/2023 11:32:38 User: 5277925980; Fullname: 🌚; Message: /start;
+DEBUG 19/01/2023 11:32:38 Make request: "sendMessage" with data: "{'chat_id': 5277925980, 'text': 'Привет, 🌚! Это команда /start'}" and files "None"
+DEBUG 19/01/2023 11:32:38 Make request: "getUpdates" with data: "{'offset': 704089114, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:38 Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":408,"from":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117150,"text":"\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442, \\ud83c\\udf1a! \\u042d\\u0442\\u043e \\u043a\\u043e\\u043c\\u0430\\u043d\\u0434\\u0430 /start","entities":[{"offset":24,"length":6,"type":"bot_command"}]}}'"
+DEBUG 19/01/2023 11:32:58 Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG 19/01/2023 11:32:59 Make request: "getUpdates" with data: "{'offset': 704089114, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:59 Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":704089114,\n"message":{"message_id":409,"from":{"id":5277925980,"is_bot":false,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","language_code":"ru"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117170,"text":"/help","entities":[{"offset":0,"length":5,"type":"bot_command"}]}}]}'"
+DEBUG 19/01/2023 11:32:59 Received 1 updates.
+INFO 19/01/2023 11:32:59 User: 5277925980; Fullname: 🌚; Message: /help;
+DEBUG 19/01/2023 11:32:59 Make request: "sendMessage" with data: "{'chat_id': 5277925980, 'text': 'Привет, 🌚! Это команда /help'}" and files "None"
+DEBUG 19/01/2023 11:32:59 Make request: "getUpdates" with data: "{'offset': 704089115, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:32:59 Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":410,"from":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117170,"text":"\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442, \\ud83c\\udf1a! \\u042d\\u0442\\u043e \\u043a\\u043e\\u043c\\u0430\\u043d\\u0434\\u0430 /help","entities":[{"offset":24,"length":5,"type":"bot_command"}]}}'"
+DEBUG 19/01/2023 11:33:00 Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":704089115,\n"message":{"message_id":411,"from":{"id":5277925980,"is_bot":false,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","language_code":"ru"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117171,"text":"/quit","entities":[{"offset":0,"length":5,"type":"bot_command"}]}}]}'"
+DEBUG 19/01/2023 11:33:00 Received 1 updates.
+INFO 19/01/2023 11:33:00 User: 5277925980; Fullname: 🌚; Message: /quit;
+DEBUG 19/01/2023 11:33:00 Make request: "sendMessage" with data: "{'chat_id': 5277925980, 'text': 'Привет, 🌚! Это команда /quit'}" and files "None"
+DEBUG 19/01/2023 11:33:00 Make request: "getUpdates" with data: "{'offset': 704089116, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:33:00 Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":412,"from":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117171,"text":"\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442, \\ud83c\\udf1a! \\u042d\\u0442\\u043e \\u043a\\u043e\\u043c\\u0430\\u043d\\u0434\\u0430 /quit","entities":[{"offset":24,"length":5,"type":"bot_command"}]}}'"
+DEBUG 19/01/2023 11:33:00 Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":704089116,\n"message":{"message_id":413,"from":{"id":5277925980,"is_bot":false,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","language_code":"ru"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117172,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}'"
+DEBUG 19/01/2023 11:33:00 Received 1 updates.
+INFO 19/01/2023 11:33:00 User: 5277925980; Fullname: 🌚; Message: /start;
+DEBUG 19/01/2023 11:33:00 Make request: "sendMessage" with data: "{'chat_id': 5277925980, 'text': 'Привет, 🌚! Это команда /start'}" and files "None"
+DEBUG 19/01/2023 11:33:00 Make request: "getUpdates" with data: "{'offset': 704089117, 'timeout': 20}" and files "None"
+DEBUG 19/01/2023 11:33:00 Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":414,"from":{"id":5837249795,"is_bot":true,"first_name":"TestBot6661123","username":"testbot6661123Bot"},"chat":{"id":5277925980,"first_name":"\\ud83c\\udf1a","username":"qwerty5621","type":"private"},"date":1674117172,"text":"\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442, \\ud83c\\udf1a! \\u042d\\u0442\\u043e \\u043a\\u043e\\u043c\\u0430\\u043d\\u0434\\u0430 /start","entities":[{"offset":24,"length":6,"type":"bot_command"}]}}'"
