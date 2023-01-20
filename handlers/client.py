@@ -1,13 +1,14 @@
-import logging, time
-
+import applogger
 from aiogram import types, Dispatcher
-
 from instances import dp, bot
 from keyboards import start_keyboard, actions_keyboard, buytag_keyboard
+
+logger = applogger.get_logger(__name__)
 
 
 async def process_start_command(message: types.Message):
     await message.answer("Some text!", reply_markup=start_keyboard)
+    logger.info(f'{message.from_user.id};{message.from_user.full_name}")
 
 async def process_start_callback(query: types.CallbackQuery):
     await query.message.edit_text('Главное меню', reply_markup=start_keyboard)

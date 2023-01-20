@@ -1,12 +1,11 @@
-import os, logging
-import datetime
-from time import time_ns
+import os, applogger
+
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-storage = MemoryStorage()
+logger = applogger.get_logger(__name__)
 
-# logger = logging.basicConfig(format='%(levelname)s %(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S', filename=f'logs/{datetime.datetime.now().strftime("%d-%m-%y %H-%M-%S")}.log', encoding='utf-8', level=logging.INFO) 
+storage = MemoryStorage()
 
 bot = Bot(token=str(os.getenv('APP_TOKEN')))
 dp = Dispatcher(bot=bot, storage=storage)

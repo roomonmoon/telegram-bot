@@ -1,10 +1,17 @@
 from aiogram.utils import executor
 from instances import dp
 from handlers import client, admin, other
+import applogger
 
+logger = applogger.get_logger(__name__)
 
 async def on_startup(_):
-    print('BOT ONLINE')
+    logger.info('Bot was started successful.')
+    try:
+        handlers()
+        logger.info(f"All handlers was started successful.")
+    except Exception as ex:
+        logger.critical(ex)
 
 
 def handlers():
@@ -12,8 +19,10 @@ def handlers():
     client.register_handlers_client(dp)
 
 def main():
-    handlers()
-    executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
+    try:
+        logger.warning(executor.start_polling(dp, skip_updates=True, on_startup=on_startup))
+    except Exception as ex:
+        logger.critical(ex) 
 
 if __name__ == "__main__":
     main()

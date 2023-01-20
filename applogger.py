@@ -1,17 +1,20 @@
-import logging 
+import logging, datetime
 
-_log_format = f"%(asctime)s %(levelname)s %(message)s"
+_log_name = f"""logs/{datetime.datetime.now().strftime("%d-%m-%y %H-%M-%S")}.log"""
+_log_format = f"%(levelname)s %(asctime)s %(message)s"
+_datefmt = f"%d/%m/%Y %H:%M:%S"
+
 
 def get_file_handler():
-    file_handler = logging.FileHandler("example.log")
-    file_handler.setLevel(logging.WARNING)
-    file_handler.setFormatter(logging.Formatter(_log_format))
+    file_handler = logging.FileHandler("logs/example.log")
+    file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(logging.Formatter(_log_format, _datefmt))
     return file_handler
 
 def get_stream_handler():
     stream_handler = logging.StreamHandler()
     stream_handler.setLevel(logging.INFO)
-    stream_handler.setFormatter(logging.Formatter(_log_format))
+    stream_handler.setFormatter(logging.Formatter(_log_format, _datefmt))
     return stream_handler
 
 def get_logger(name):
