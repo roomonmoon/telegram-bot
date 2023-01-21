@@ -20,7 +20,7 @@ def handlers():
 
 def main():
     try:
-        logger.warning(executor.start_polling(dp, skip_updates=True, on_startup=on_startup))
+        logger.info(executor.start_polling(dp, skip_updates=True, on_startup=on_startup))
     except Exception as ex:
         logger.critical(ex) 
 

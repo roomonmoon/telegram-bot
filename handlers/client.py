@@ -7,7 +7,6 @@ logger = applogger.get_logger(__name__)
 
 
 async def process_start_command(message: types.Message):
-    logger.warning(msg=f"[Message: {message.text}] [From: {message.from_user.id}]")
     await message.answer("Some text!", reply_markup=start_keyboard)
 
 async def process_start_callback(query: types.CallbackQuery):

@@ -15,3 +15,32 @@ ERROR 21/01/2023 13:07:56 /start5277925980
 INFO 21/01/2023 13:08:44 Bot was started successful.
 INFO 21/01/2023 13:08:44 All handlers was started successful.
 WARNING 21/01/2023 13:08:45 [Message: /start] [From: 5277925980]
+INFO on_startup 21/01/2023 17:29:55 Bot was started successful.
+INFO on_startup 21/01/2023 17:29:55 All handlers was started successful.
+WARNING process_start_command 21/01/2023 17:30:01 [Message: /start] [From: 5277925980]
+INFO 21/01/2023 17:31:46 Bot was started successful. [[bot.py on_startup]]
+INFO 21/01/2023 17:31:46 All handlers was started successful. [[bot.py on_startup]]
+WARNING 21/01/2023 17:31:48 [Message: /start] [From: 5277925980] [[client.py process_start_command]]
+INFO 21/01/2023 17:33:32 Bot was started successful. (File: bot.py) (Function: on_startup)
+INFO 21/01/2023 17:33:32 All handlers was started successful. (File: bot.py) (Function: on_startup)
+WARNING 21/01/2023 17:33:33 [Message: /start] [From: 5277925980] (File: client.py) (Function: process_start_command)
+INFO 21/01/2023 17:34:06 Bot was started successful. (File: bot.py) (Function: on_startup 9)
+INFO 21/01/2023 17:34:06 All handlers was started successful. (File: bot.py) (Function: on_startup 12)
+WARNING 21/01/2023 17:34:08 [Message: /start] [From: 5277925980] (File: client.py) (Function: process_start_command 10)
+INFO 21/01/2023 17:34:37 Bot was started successful. (File: bot.py) (Function: on_startup Line: 9)
+INFO 21/01/2023 17:34:37 All handlers was started successful. (File: bot.py) (Function: on_startup Line: 12)
+INFO 21/01/2023 17:35:03 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:35:03 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+WARNING 21/01/2023 17:35:10 [Message: /start] [From: 5277925980] (File: client.py) (Function: process_start_command (Line: 10))
+INFO 21/01/2023 17:37:03 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:37:03 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+INFO 21/01/2023 17:39:44 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:39:44 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+INFO 21/01/2023 17:50:21 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:50:21 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+INFO 21/01/2023 17:51:36 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:51:36 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+INFO 21/01/2023 17:56:09 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:56:09 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+INFO 21/01/2023 17:57:12 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 21/01/2023 17:57:12 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))

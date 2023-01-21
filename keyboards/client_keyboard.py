@@ -22,12 +22,14 @@ actions_keyboard = InlineKeyboardMarkup()
 actions_keyboard.add(b4).add(b5).add(b6).add(back)
 
 """ACTIONS KEYBOARD END"""
-b7 = InlineKeyboardButton('Купить тег', callback_data='payment_tag')
-buytag_keyboard = InlineKeyboardMarkup()
-buytag_keyboard.add(b7).add(back)
+
 """BUYTAG KEYBOARD START"""
 
-
+b7 = InlineKeyboardButton('Босс', callback_data='boss')
+b8= InlineKeyboardButton('Пахан', callback_data='father')
+b9 = InlineKeyboardButton('Смотрящий', callback_data='viewer')
+buytag_keyboard = InlineKeyboardMarkup()
+buytag_keyboard.add(b7).add(b8).add(b9).add(back)
 
 """BUYTAG KEYBOARD END"""
 

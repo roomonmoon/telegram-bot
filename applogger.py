@@ -1,7 +1,7 @@
 import logging, datetime
 
 _log_name = f"""logs/{datetime.datetime.now().strftime("%d-%m-%y %H-%M-%S")}.log"""
-_log_format = f"%(levelname)s %(asctime)s %(message)s"
+_log_format = f"%(levelname)s %(asctime)s %(message)s (File: %(filename)s) (Function: %(funcName)s (Line: %(lineno)d))"
 _datefmt = f"%d/%m/%Y %H:%M:%S"
 
 
