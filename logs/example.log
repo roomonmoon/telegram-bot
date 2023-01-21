@@ -1,2 +1,17 @@
-INFO 20/01/2023 16:37:18 Bot was started successful.
-INFO 20/01/2023 16:37:18 All handlers was started successful.
+INFO 21/01/2023 13:04:22 Bot was started successful.
+INFO 21/01/2023 13:04:22 All handlers was started successful.
+INFO 21/01/2023 13:04:22 /start
+INFO 21/01/2023 13:04:50 Bot was started successful.
+INFO 21/01/2023 13:04:50 All handlers was started successful.
+INFO 21/01/2023 13:05:52 Bot was started successful.
+INFO 21/01/2023 13:05:52 All handlers was started successful.
+INFO 21/01/2023 13:05:52 {message.text}{message.from_user.id}
+INFO 21/01/2023 13:06:04 Bot was started successful.
+INFO 21/01/2023 13:06:04 All handlers was started successful.
+INFO 21/01/2023 13:06:05 /start5277925980
+INFO 21/01/2023 13:07:53 Bot was started successful.
+INFO 21/01/2023 13:07:53 All handlers was started successful.
+ERROR 21/01/2023 13:07:56 /start5277925980
+INFO 21/01/2023 13:08:44 Bot was started successful.
+INFO 21/01/2023 13:08:44 All handlers was started successful.
+WARNING 21/01/2023 13:08:45 [Message: /start] [From: 5277925980]
