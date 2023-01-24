@@ -1,5 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
-import sqlite3, asyncio
+import sqlite3, applogger
+
+logger = applogger.get_logger(__name__)
 
 """START KEYBOARD START"""
 
@@ -31,8 +33,8 @@ def generate_tag_keyboard():
     db = sqlite3.connect('data.db')
     sql = db.cursor()
     buttons = InlineKeyboardMarkup()
-    for tag in sql.execute("SELECT title FROM tags"):
-        buttons.add(InlineKeyboardButton(f'{tag[0]}', callback_data=f'{tag[0]}'))
+    for id, title, price in sql.execute("SELECT id,title,price FROM tags"):
+        buttons.add(InlineKeyboardButton(f'{title} — {price}₽', callback_data=f'{id}'))
     sql.close()
     return buttons.add(back)
 
