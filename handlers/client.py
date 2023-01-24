@@ -8,14 +8,21 @@ logger = applogger.get_logger(__name__)
 
 async def process_start_command(message: types.Message):
     await message.answer("Стартовая клавиатура!", reply_markup=start_keyboard)
-    await bot.g
 
 async def process_start_callback(query: types.CallbackQuery):
     await query.message.edit_text('Главное меню', reply_markup=start_keyboard)
 
 async def process_unban_callback(query: types.CallbackQuery):
-    print(await bot.get_chat_member(chat_id=-1001594775909, user_id=5277925980))
-    await query.message.edit_text("Стоимость разблокировки стоит 2 рубля.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buy')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')))
+    user = await bot.get_chat_member(chat_id=-1001594775909, user_id=query.from_user.id)
+    print(user)
+    if user['status'] == 'kicked':
+        await query.message.edit_text("Стоимость разблокировки стоит 2 рубля.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buy')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')))
+    else:
+        await query.message.edit_text("Вы не имеете блокировок на этом аккаунте.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Вернуться', callback_data='start')))
+
+
+
+
 
 
 
