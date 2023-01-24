@@ -2,6 +2,7 @@ from aiogram import types, Dispatcher
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 from instances import dp, bot
 from keyboards import start_keyboard, actions_keyboard, generate_tag_keyboard
+from templates import *
 import sqlite3, applogger
 
 logger = applogger.get_logger(__name__)
@@ -13,12 +14,15 @@ async def process_start_callback(query: types.CallbackQuery):
     await query.message.edit_text('Главное меню', reply_markup=start_keyboard)
 
 async def process_unban_callback(query: types.CallbackQuery):
-    user = await bot.get_chat_member(chat_id=-1001594775909, user_id=query.from_user.id)
+    user = await bot.get_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
     print(user)
-    if user['status'] == 'kicked':
-        await query.message.edit_text("Стоимость разблокировки стоит 2 рубля.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buy')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')))
+    if user['status'] == 'left':
+        await query.message.edit_text("Стоимость разблокировки стоит 2 рубля.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buy')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')).add(InlineKeyboardButton(text='Вернуться', callback_data='start')))
+        
     else:
         await query.message.edit_text("Вы не имеете блокировок на этом аккаунте.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Вернуться', callback_data='start')))
+
+async def 
 
 
 
