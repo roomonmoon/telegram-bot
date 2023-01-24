@@ -14,9 +14,12 @@ db.commit()
 tag_title = input("Кличка:")
 tag_price = int(input("Стоимость клички:"))
 
+
 sql.execute(f"INSERT INTO tags VALUES (?,?,?)", (None, tag_title, tag_price))
 db.commit()
 
+# sql.execute(f"DELETE FROM tags WHERE id=2;")
+# db.commit()
 
 
 def main():
