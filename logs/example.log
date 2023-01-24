@@ -120,3 +120,7 @@ INFO 24/01/2023 13:42:35 Bot was started successful. (File: bot.py) (Function: o
 INFO 24/01/2023 13:42:35 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
 INFO 24/01/2023 13:48:04 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
 INFO 24/01/2023 13:48:04 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
+INFO 24/01/2023 14:02:00 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+CRITICAL 24/01/2023 14:02:00 Invalid filter name(s): 'textx' (File: bot.py) (Function: on_startup (Line: 14))
+INFO 24/01/2023 14:02:42 Bot was started successful. (File: bot.py) (Function: on_startup (Line: 9))
+INFO 24/01/2023 14:02:42 All handlers was started successful. (File: bot.py) (Function: on_startup (Line: 12))
