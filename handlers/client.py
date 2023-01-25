@@ -3,9 +3,9 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 from instances import dp, bot
 from keyboards import start_keyboard, actions_keyboard, generate_tag_keyboard
 from templates import *
-import sqlite3, applogger
+import sqlite3
 
-logger = applogger.get_logger(__name__)
+# logger = applogger.get_logger(__name__)
 
 async def process_start_command(message: types.Message):
     await message.answer("Стартовая клавиатура!", reply_markup=start_keyboard)
@@ -17,19 +17,10 @@ async def process_unban_callback(query: types.CallbackQuery):
     user = await bot.get_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
     print(user)
     if user['status'] == 'left':
-        await query.message.edit_text("Стоимость разблокировки стоит 2 рубля.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buy')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')).add(InlineKeyboardButton(text='Вернуться', callback_data='start')))
-        
+        await query.message.edit_text("Стоимость разблокировки стоит 2 рубля.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='unban')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')).add(InlineKeyboardButton(text='Вернуться', callback_data='start')))
+    
     else:
         await query.message.edit_text("Вы не имеете блокировок на этом аккаунте.", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Вернуться', callback_data='start')))
-
-async def 
-
-
-
-
-
-
-
 
 
 async def process_actions_callback(query: types.CallbackQuery):
@@ -39,7 +30,7 @@ async def process_buytag_callback(query: types.CallbackQuery):
     await query.message.edit_text('Список доступных тегов:', reply_markup=generate_tag_keyboard())
 
 async def process_buytag__payment_callback(query: types.CallbackQuery):
-    await query.message.edit_text(f"", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buy')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')))
+    await query.message.edit_text(f"", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text='Оплатить', callback_data='buytag')).add(InlineKeyboardButton(text='Проверить оплату', callback_data='checkpayment')))
     # await query.message.edit_text(f'{query.data.title()}', reply_markup=payment_keyboard(title, price))
     # pass
 
