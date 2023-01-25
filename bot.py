@@ -1,8 +1,6 @@
 from aiogram.utils import executor
 from instances import dp
 from handlers import client, admin
-from pyqiwip2p import QiwiP2P
-
 
 
 def handlers():

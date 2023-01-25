@@ -1,32 +1,14 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
-import sqlite3, applogger
+import sqlite3, applogger, payment
 
 logger = applogger.get_logger(__name__)
 
-"""START KEYBOARD START"""
-
-b1 = InlineKeyboardButton('Информация', callback_data='info')
-b2 = InlineKeyboardButton('Действия', callback_data='actions')
-b3 = InlineKeyboardButton('Разбан', callback_data='unban')
+unban = InlineKeyboardButton('Unban', callback_data='unban')
+back = InlineKeyboardButton('Back', callback_data='start')
 
 start_keyboard = InlineKeyboardMarkup()
-start_keyboard.add(b1).add(b2).add(b3)
+start_keyboard.add(unban)
 
-"""START KEYBOARD END"""
-
-"""ACTIONS KEYBOARD START"""
-
-b4 = InlineKeyboardButton('Купить тег', callback_data='buytag')
-b5 = InlineKeyboardButton('Перевестись в камеру', callback_data='transferme')
-b6 = InlineKeyboardButton('Сколько меня ещё кличать будут?', callback_data='checktime')
-back = InlineKeyboardButton('Вернуться', callback_data='start')
-
-actions_keyboard = InlineKeyboardMarkup()
-actions_keyboard.add(b4).add(b5).add(b6).add(back)
-
-"""ACTIONS KEYBOARD END"""
-
-"""BUYTAG KEYBOARD START"""
 
 
 def generate_tag_keyboard():
@@ -38,15 +20,12 @@ def generate_tag_keyboard():
     sql.close()
     return buttons.add(back)
 
-def generate_tag__payment_keyboard():
-    pass
+def payment_keyboard(billing_url, billing_id):
+    pay = InlineKeyboardButton(text="Pay", url=f"{billing_url}")
+    check = InlineKeyboardButton(text="Check", callback_data="CheckPaymentStatus")
+    back = InlineKeyboardButton(text="Back", callback_data="start")
+    keyboard = InlineKeyboardMarkup()
+    keyboard.add(pay).add(check).add(back)
+    return keyboard
 
-
-b7 = InlineKeyboardButton('Босс', callback_data='boss')
-b8= InlineKeyboardButton('Пахан', callback_data='father')
-b9 = InlineKeyboardButton('Смотрящий', callback_data='viewer')
-buytag_keyboard = InlineKeyboardMarkup()
-buytag_keyboard.add(b7).add(b8).add(b9).add(back)
-
-"""BUYTAG KEYBOARD END"""
 
