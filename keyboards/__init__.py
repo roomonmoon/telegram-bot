@@ -1,1 +1,1 @@
-from keyboards.client_keyboard import start_keyboard, actions_keyboard, buytag_keyboard, generate_tag_keyboard
+from keyboards.client_keyboard import start_keyboard, payment_keyboard
