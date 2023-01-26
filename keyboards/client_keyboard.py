@@ -11,6 +11,7 @@ start_keyboard.add(unban)
 
 
 
+
 def generate_tag_keyboard():
     db = sqlite3.connect('data.db')
     sql = db.cursor()
@@ -20,12 +21,16 @@ def generate_tag_keyboard():
     sql.close()
     return buttons.add(back)
 
-def payment_keyboard(billing_url, billing_id):
-    pay = InlineKeyboardButton(text="Pay", url=f"{billing_url}")
-    check = InlineKeyboardButton(text="Check", callback_data="CheckPaymentStatus")
-    back = InlineKeyboardButton(text="Back", callback_data="start")
+def payment_keyboard(isUrl=True, url="", bill=""):
     keyboard = InlineKeyboardMarkup()
-    keyboard.add(pay).add(check).add(back)
+    if isUrl:
+        pay = InlineKeyboardButton(text="Pay", url=url)
+        keyboard.insert(pay)
+
+
+    check = InlineKeyboardButton(text="Check", callback_data="check_"+bill)
+    back = InlineKeyboardButton(text="Back", callback_data="start")
+    keyboard.add(check).add(back)
     return keyboard
 
 

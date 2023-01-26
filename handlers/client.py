@@ -1,6 +1,7 @@
 from aiogram import types, Dispatcher
-from instances import bot, p2p, CHANNEL_ID, CHANNEL_CHAT_ID
+from instances import bot, p2p, db, CHANNEL_ID, CHANNEL_CHAT_ID
 from keyboards import start_keyboard, payment_keyboard
+
 
 # logger = applogger.get_logger(__name__)
 
@@ -16,13 +17,26 @@ async def process_unban_callback(query: types.CallbackQuery):
     print(user['status'])
 
     if user['status'] == 'left':
-        await query.message.edit_text("You're was kicked from the channel")
-        
+        bill = p2p.bill(amount=5, lifetime=15)
+        db.add_billing_check(query.from_user.id, bill.bill_id)    
+
+        await query.message.edit_text("You're was kicked from the channel", reply_markup=payment_keyboard(url=bill.pay_url, bill=str(bill.bill_id)))
     else:
         await bot.send_message(query.from_user.id, "You're haven't ban in our channel")
 
+async def process_check_billing_status(callback: types.CallbackQuery):
+    bill = str(callback.data[6:])
+    info = db.get_billing_check(bill)
+    if info != False:
+        if str(p2p.check(bill_id=bill).status) == "PAID":
+            await callback.message.edit_text("You're succesfully paid.", reply_markup=start_keyboard)
+        else:
+            await callback.message.edit_text("You haven't paid yet.", reply_markup=payment_keyboard(False, bill=bill))
+    else:
+        await callback.message.edit_text("You must pay.", reply_markup=payment_keyboard(True, bill=bill))
 
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(process_start_command, commands=['start']) 
     dp.register_callback_query_handler(process_start_callback, text="start")
     dp.register_callback_query_handler(process_unban_callback, text="unban")   
+    dp.register_callback_query_handler(process_check_billing_status, text_contains="check_")

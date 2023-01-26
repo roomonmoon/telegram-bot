@@ -1,5 +1,4 @@
-from keyboards import generate_tag_keyboard
-from keyboards import start_keyboard
+from instances import db
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 import sqlite3
 
@@ -14,10 +13,4 @@ import sqlite3
 
 # print(start_keyboard)
 
-db = sqlite3.connect('data.db')
-sql = db.cursor()
-
-var = sql.execute("SELECT title, price FROM tags")
-
-for title, id in sql.execute("SELECT title, price FROM tags"):
-    print(title)
+db.cursor.execute("SELECT * FROM `check`")
