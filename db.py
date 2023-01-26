@@ -8,7 +8,7 @@ class Database():
     def add_billing_check(self, user_id, bill_id):
         with self.connection:
             result = self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`) VALUES (?,?)", (user_id, bill_id))
-            print()
+            print('add')
 
     def get_billing_check(self, bill_id):
         result = self.cursor.execute("SELECT * FROM `check` WHERE `bill_id` = ?", (bill_id)).fetchmany(1)
@@ -19,3 +19,4 @@ class Database():
     def remove_billing_check(self, bill_id):
         with self.connection:
             return self.cursor.execute("DELETE FROM `check` WHERE `bill_id` = ?", (bill_id))
+        

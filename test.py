@@ -12,5 +12,7 @@ import sqlite3
 # print(keyboard)
 
 # print(start_keyboard)
+user_id = 1
+bill_id = 915621
 
-db.cursor.execute("SELECT * FROM `check`")
+db.cursor.execute("SELECT * FROM `check`").fetchall()
