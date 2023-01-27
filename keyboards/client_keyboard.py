@@ -23,16 +23,12 @@ def generate_tag_keyboard():
     sql.close()
     return buttons.add(back)
 
-def payment_keyboard(isUrl=True, url="", bill=""):
-    keyboard = InlineKeyboardMarkup()
-    if isUrl:
-        pay = InlineKeyboardButton(text="Pay", url=url)
-        keyboard.insert(pay)
-
-
+def payment_keyboard(url="", bill=""):
+    pay = InlineKeyboardButton(text="Pay", url=url)
     check = InlineKeyboardButton(text="Check", callback_data="check_"+bill)
     back = InlineKeyboardButton(text="Back", callback_data="start")
-    keyboard.add(check).add(back)
+    keyboard = InlineKeyboardMarkup()
+    keyboard.add(pay).add(check).add(back)
     return keyboard
 
 

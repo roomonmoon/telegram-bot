@@ -13,6 +13,8 @@ import sqlite3
 
 # print(start_keyboard)
 user_id = 1
-bill_id = 915621
+bill_id = 1233
 
-db.cursor.execute("SELECT * FROM `check`").fetchall()
+db.add_billing_check(user_id, bill_id)
+
+# db.cursor.execute("SELECT * FROM `check`").fetchall()
