@@ -16,7 +16,7 @@ async def process_start_callback(query: types.CallbackQuery):
 async def process_check_ban_status_callback(query: types.CallbackQuery):
     user = await bot.get_chat_member(chat_id=f'{CHANNEL_CHAT_ID}', user_id=query.from_user.id)
     if user['status'] == 'left':  
-        await query.message.edit_text("You're was kicked from the channel", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Pay", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
+        await query.message.edit_text("You're was kicked from the channel", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Payment", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
     else:
         await bot.send_message(query.from_user.id, "You're haven't ban in our channel", reply_markup=back_button)
 
@@ -34,7 +34,7 @@ async def process_check_billing_status(callback: types.CallbackQuery):
         if str(p2p.check(bill_id=bill).status) == "PAID":
             await callback.message.edit_text("You're succesfully paid.", reply_markup=start_keyboard)
         else:
-            await callback.message.edit_text("You haven't paid yet.", reply_markup=payment_keyboard(False, bill=bill))
+            await callback.message.edit_text("You haven't paid yet.", reply_markup=payment_keyboard(True, bill=bill))
     else:
         await callback.message.edit_text("You must pay.", reply_markup=payment_keyboard(True, bill=bill))
 
