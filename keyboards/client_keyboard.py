@@ -4,10 +4,11 @@ import sqlite3, applogger
 logger = applogger.get_logger(__name__)
 
 unban = InlineKeyboardButton('Unban', callback_data='check_ban_status')
+tags = InlineKeyboardButton('Tags', callback_data='tags')
 back = InlineKeyboardButton('Back', callback_data='start')
 
 start_keyboard = InlineKeyboardMarkup()
-start_keyboard.add(unban)
+start_keyboard.add(unban).add(tags)
 
 back_button = InlineKeyboardMarkup().add(InlineKeyboardButton(text="Back", callback_data="start"))
 

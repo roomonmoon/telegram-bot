@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from instances import bot, p2p, db, CHANNEL_ID, CHANNEL_CHAT_ID
-from keyboards import start_keyboard, back_button, payment_keyboard
+from keyboards import start_keyboard, back_button, payment_keyboard, generate_tag_keyboard
 
 
 # logger = applogger.get_logger(__name__)
@@ -46,6 +46,10 @@ async def process_check_billing_status(query: types.CallbackQuery):
         else:
             await query.answer("You haven't paid yet.")
 
+
+async def process_show_tags_callback(query: types.CallbackQuery):
+    await query.message.edit_text("Avaible tags", reply_markup=generate_tag_keyboard())
+
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(process_start_command, commands=['start']) 
     dp.register_callback_query_handler(process_start_callback, text="start")
@@ -53,3 +57,4 @@ def register_handlers_client(dp : Dispatcher):
     dp.register_callback_query_handler(process_unban_callback, text="unban")   
     dp.register_callback_query_handler(process_check_billing_status, text_contains="check_")
     dp.register_callback_query_handler(process_cancel_callback, text_contains="cancel")
+    dp.register_callback_query_handler(process_show_tags_callback, text="tags")
