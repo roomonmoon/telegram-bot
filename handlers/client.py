@@ -16,9 +16,9 @@ async def process_start_callback(query: types.CallbackQuery):
 async def process_check_ban_status_callback(query: types.CallbackQuery):
     channelStatus = await bot.get_chat_member(chat_id=CHANNEL_ID, user_id=query.from_user.id)
     chatStatus = await bot.get_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
-    print("Channel: ",channelStatus['status'])
-    print("Chat: ",chatStatus['status'])
-    if chatStatus['status'] == 'kicked':  
+    print("Channel: ", channelStatus['status'])
+    print("Chat: ", chatStatus['status'])
+    if chatStatus['status'] == 'kicked' or channelStatus['status'] == 'kicked':  
         await query.message.edit_text("You're was kicked from the channel", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Payment", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
     else:
         await bot.send_message(query.from_user.id, "You're haven't ban in our channel", reply_markup=back_button)
@@ -41,10 +41,10 @@ async def process_check_billing_status(query: types.CallbackQuery):
             await bot.unban_chat_member(chat_id=CHANNEL_ID, user_id=query.from_user.id)
             await bot.unban_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
             db.remove_billing_check(bill)
-            await query.message.edit_text("You're succesfully paid.")
-            await query.message.answer("Welcome. You was unbanned in chat. Please don't repeat you misstakes!\nhttps://t.me/+4DQ0-5haYmZlZDhi", reply_markup=start_keyboard)
+            await query.answer("You're succesfully paid.")
+            await query.message.answer("Welcome. You was unbanned in chat. Please don't repeat you misstakes!\n[CHAT:  https://t.me/+4DQ0-5haYmZlZDhi]\n[CHANNEL: https://t.me/+csmgI67BzuthM2Ni]", reply_markup=start_keyboard)
         else:
-            await query.message.answer("You haven't paid yet.")
+            await query.answer("You haven't paid yet.")
 
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(process_start_command, commands=['start']) 
