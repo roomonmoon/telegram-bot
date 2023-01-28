@@ -20,11 +20,11 @@ def generate_tag_keyboard():
     sql = db.cursor()
     buttons = InlineKeyboardMarkup()
     for id, title, price in sql.execute("SELECT id,title,price FROM tags"):
-        buttons.add(InlineKeyboardButton(f'{title} — {price}₽', callback_data=f'{id}'))
+        buttons.add(InlineKeyboardButton(f'{title} — {price}₽', callback_data="tag_"+title))
     sql.close()
     return buttons.add(back)
 
-def payment_keyboard(url="", bill=""):
+def unban_payment_keyboard(url="", bill=""):
     pay = InlineKeyboardButton(text="Pay", url=url)
     check = InlineKeyboardButton(text="Check", callback_data="check_"+bill)
     cancel = InlineKeyboardButton(text="Cancel", callback_data="cancel"+bill)
@@ -32,4 +32,11 @@ def payment_keyboard(url="", bill=""):
     keyboard.add(pay).add(check).add(cancel)
     return keyboard
 
+def tag_payment_keyboard(url="", bill=""):
+    pay = InlineKeyboardButton(text="Pay", url=url)
+    check = InlineKeyboardButton(text="Check", callback_data="tagpay_"+bill)
+    cancel = InlineKeyboardButton(text="Cancel", callback_data="cancel"+bill)
+    keyboard = InlineKeyboardMarkup()
+    keyboard.add(pay).add(check).add(cancel)
+    return keyboard
 

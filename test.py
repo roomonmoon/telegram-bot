@@ -13,6 +13,6 @@ import sqlite3
 
 # print(start_keyboard)
 
-db.remove_billing_check(bill_id="WhiteApfel-PyQiwiP2P-91140780-826")
+print(db.get_billing_tag(446776902))
 
 # db.cursor.execute("SELECT * FROM `check`").fetchall()

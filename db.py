@@ -5,17 +5,14 @@ class Database():
         self.connection = sqlite3.connect(db_file) 
         self.cursor = self.connection.cursor()
 
-    def add_billing_check(self, user_id, bill_id):
+    def add_billing_check(self, user_id, bill_id, tag):
         with self.connection:
             request = self.cursor.execute("SELECT * FROM `check` WHERE `user_id` = ?", (user_id,)).fetchmany(1)
             if not bool(len(request)):
-                result = self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`) VALUES (?,?)", (user_id, bill_id,))
-                # print('Add new billing check')
+                result = self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`) VALUES (?,?,?)", (user_id, bill_id, tag,))
             else:
                 request = self.cursor.execute("DELETE FROM `check` WHERE `user_id` = ?", (user_id,))
-                # print('Deleting...')
-                # print('Adding...')
-                return self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`) VALUES (?,?)", (user_id, bill_id,))
+                return self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`) VALUES (?,?,?)", (user_id, bill_id, tag,))
                 
     def get_billing_check(self, bill_id):
         result = self.cursor.execute("SELECT * FROM `check` WHERE `bill_id` = ?", (bill_id,)).fetchmany()
@@ -27,3 +24,8 @@ class Database():
         with self.connection:
             return self.cursor.execute("DELETE FROM `check` WHERE `bill_id` = ?", (bill_id,))
         
+    def get_billing_tag(self, user_id):
+        result = self.cursor.execute("SELECT tag FROM `check` WHERE `user_id` = ?", (user_id,)).fetchone()
+        if not bool(len(result)):
+            return False
+        return result[0]
