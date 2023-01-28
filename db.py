@@ -25,5 +25,5 @@ class Database():
 
     def remove_billing_check(self, bill_id):
         with self.connection:
-            return self.cursor.execute("DELETE FROM `check` WHERE `bill_id` = ?", (bill_id))
+            return self.cursor.execute("DELETE FROM `check` WHERE `bill_id` = ?", (bill_id,))
         

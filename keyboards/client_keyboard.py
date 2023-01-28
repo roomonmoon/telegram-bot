@@ -26,9 +26,9 @@ def generate_tag_keyboard():
 def payment_keyboard(url="", bill=""):
     pay = InlineKeyboardButton(text="Pay", url=url)
     check = InlineKeyboardButton(text="Check", callback_data="check_"+bill)
-    back = InlineKeyboardButton(text="Back", callback_data="start")
+    cancel = InlineKeyboardButton(text="Cancel", callback_data="cancel"+bill)
     keyboard = InlineKeyboardMarkup()
-    keyboard.add(pay).add(check).add(back)
+    keyboard.add(pay).add(check).add(cancel)
     return keyboard
 
 

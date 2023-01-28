@@ -12,9 +12,7 @@ import sqlite3
 # print(keyboard)
 
 # print(start_keyboard)
-user_id = 1
-bill_id = 1233
 
-db.add_billing_check(user_id, bill_id)
+db.remove_billing_check(bill_id="WhiteApfel-PyQiwiP2P-91140780-826")
 
 # db.cursor.execute("SELECT * FROM `check`").fetchall()

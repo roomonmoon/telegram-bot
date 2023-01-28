@@ -14,9 +14,11 @@ async def process_start_callback(query: types.CallbackQuery):
     await query.message.edit_text('Start keyboard', reply_markup=start_keyboard)
 
 async def process_check_ban_status_callback(query: types.CallbackQuery):
-    user = await bot.get_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
-    print(user['status'])
-    if user['status'] == 'kicked':  
+    channelStatus = await bot.get_chat_member(chat_id=CHANNEL_ID, user_id=query.from_user.id)
+    chatStatus = await bot.get_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
+    print("Channel: ",channelStatus['status'])
+    print("Chat: ",chatStatus['status'])
+    if chatStatus['status'] == 'kicked':  
         await query.message.edit_text("You're was kicked from the channel", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Payment", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
     else:
         await bot.send_message(query.from_user.id, "You're haven't ban in our channel", reply_markup=back_button)
@@ -27,18 +29,22 @@ async def process_unban_callback(query: types.CallbackQuery):
         db.add_billing_check(query.from_user.id, bill.bill_id)    
         await query.message.edit_text("Please, make pay and then hold check button. You'll unban in our chat.", reply_markup=payment_keyboard(url=bill.pay_url, bill=str(bill.bill_id)))
 
+async def process_cancel_callback(query: types.CallbackQuery):
+    db.remove_billing_check(bill_id=query.data[6:])
+    await query.message.edit_text("Start keyboard", reply_markup=start_keyboard)
 
-async def process_check_billing_status(callback: types.CallbackQuery):
-    bill = str(callback.data[6:])
+async def process_check_billing_status(query: types.CallbackQuery):
+    bill = str(query.data[6:])
     info = db.get_billing_check(bill)
     if info != False:
         if str(p2p.check(bill_id=bill).status) == "PAID":
-            await bot.unban_chat_member(chat_id=CHANNEL_ID, user_id=callback.from_user.id)
-            await bot.unban_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=callback.from_user.id)
-            await callback.message.edit_text("You're succesfully paid.")
-            await callback.message.answer("Welcome. You was unbanned in chat. Please don't repeat you misstakes!\nhttps://t.me/+4DQ0-5haYmZlZDhi", reply_markup=start_keyboard)
+            await bot.unban_chat_member(chat_id=CHANNEL_ID, user_id=query.from_user.id)
+            await bot.unban_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
+            db.remove_billing_check(bill)
+            await query.message.edit_text("You're succesfully paid.")
+            await query.message.answer("Welcome. You was unbanned in chat. Please don't repeat you misstakes!\nhttps://t.me/+4DQ0-5haYmZlZDhi", reply_markup=start_keyboard)
         else:
-            await callback.message.answer("You haven't paid yet.")
+            await query.message.answer("You haven't paid yet.")
 
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(process_start_command, commands=['start']) 
@@ -46,3 +52,4 @@ def register_handlers_client(dp : Dispatcher):
     dp.register_callback_query_handler(process_check_ban_status_callback, text="check_ban_status")
     dp.register_callback_query_handler(process_unban_callback, text="unban")   
     dp.register_callback_query_handler(process_check_billing_status, text_contains="check_")
+    dp.register_callback_query_handler(process_cancel_callback, text_contains="cancel")
