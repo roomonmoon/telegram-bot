@@ -53,16 +53,13 @@ async def process_show_tags_callback(query: types.CallbackQuery):
 async def process_catch_tag_callback(query: types.CallbackQuery):
     user = await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
     print(user['status'])
-    if user['status'] == "member":
+    if user['status'] == "member" or "administrator" or "restricted":
         title = str(query.data[4:])
         price = db.get_price(title)
         bill = p2p.bill(amount=price, lifetime=15)
         db.add_billing_check(query.from_user.id, bill.bill_id, title)
         await query.message.edit_text(f"{title}", reply_markup=tag_payment_keyboard(bill.pay_url, str(bill.bill_id)))
     else:
-        permission = ["can_send_messages: = None", "can_send_media_messages: = None", "can_send_polls: = None", "can_send_other_messages: = None", "can_add_web_page_previews: = None", "can_change_info: = None", "can_invite_users: = None", "can_pin_messages: = None", "can_manage_topics: = None"]
-        restrict = await bot.restrict_chat_member(CHANNEL_CHAT_ID, query.from_user.id, (can_pin_messages = None))
-        print(restrict)
         await query.message.edit_text("You're not a member! Please join in the chat.", reply_markup=start_keyboard)
 
 async def process_tag_check_billing_status(query: types.CallbackQuery):
@@ -74,10 +71,14 @@ async def process_tag_check_billing_status(query: types.CallbackQuery):
     if info != False:
         if str(p2p.check(bill_id=bill).status) == "WAITING":
             
-            # req1 = await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=True)
-            # req2 = await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=None)
             
-            # admin_custom_title = await bot.set_chat_administrator_custom_title(CHANNEL_CHAT_ID, query.from_user.id, custom_title=str(title))
+            await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=True)       
+            admin_custom_title = await bot.set_chat_administrator_custom_title(CHANNEL_CHAT_ID, query.from_user.id, custom_title=str(title))
+            print(admin_custom_title)
+
+            # permission = {"can_send_messages": True, "can_send_media_messages": True, "can_send_polls": True, "can_send_other_messages": True, "can_add_web_page_previews": True, "can_change_info": None, "can_invite_users": None, "can_pin_messages": None, "can_manage_topics": None}
+            # restrict = await bot.restrict_chat_member(CHANNEL_CHAT_ID, query.from_user.id, permission, None, True, True, True, True)
+            # print(restrict)
             # print(set_admin)
             # print(admin_custom_title)
             await query.answer("You're succesfully paid.")
