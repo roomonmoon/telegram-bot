@@ -52,6 +52,7 @@ async def process_show_tags_callback(query: types.CallbackQuery):
 
 async def process_catch_tag_callback(query: types.CallbackQuery):
     user = await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
+    print(user['status'])
     if user['status'] == "member":
         title = str(query.data[4:])
         price = db.get_price(title)
@@ -59,25 +60,31 @@ async def process_catch_tag_callback(query: types.CallbackQuery):
         db.add_billing_check(query.from_user.id, bill.bill_id, title)
         await query.message.edit_text(f"{title}", reply_markup=tag_payment_keyboard(bill.pay_url, str(bill.bill_id)))
     else:
+        permission = ["can_send_messages: = None", "can_send_media_messages: = None", "can_send_polls: = None", "can_send_other_messages: = None", "can_add_web_page_previews: = None", "can_change_info: = None", "can_invite_users: = None", "can_pin_messages: = None", "can_manage_topics: = None"]
+        restrict = await bot.restrict_chat_member(CHANNEL_CHAT_ID, query.from_user.id, (can_pin_messages = None))
+        print(restrict)
         await query.message.edit_text("You're not a member! Please join in the chat.", reply_markup=start_keyboard)
 
 async def process_tag_check_billing_status(query: types.CallbackQuery):
     user = await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
-    print(user['status'])
     bill = str(query.data[7:])
     info = db.get_billing_check(bill)
     title = db.get_billing_tag(query.from_user.id)
     price = db.get_price(title)
     if info != False:
         if str(p2p.check(bill_id=bill).status) == "WAITING":
-            set_admin = await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=True)
-            print(set_admin, user['status'])
+            
+            # req1 = await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=True)
+            # req2 = await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=None)
+            
             # admin_custom_title = await bot.set_chat_administrator_custom_title(CHANNEL_CHAT_ID, query.from_user.id, custom_title=str(title))
             # print(set_admin)
             # print(admin_custom_title)
             await query.answer("You're succesfully paid.")
-            db.remove_billing_check(bill)
+            # db.remove_billing_check(bill)
         else:
+            
+            
             print(f'{title} not payd! Please pay {price}!')
             await query.answer("You haven't paid yet.")
     
