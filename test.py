@@ -13,6 +13,7 @@ import sqlite3
 
 # print(start_keyboard)
 
-print(db.get_billing_tag(446776902))
+print(db.get_price(title="Father"))
+
 
 # db.cursor.execute("SELECT * FROM `check`").fetchall()

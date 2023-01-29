@@ -24,6 +24,17 @@ class Database():
         with self.connection:
             return self.cursor.execute("DELETE FROM `check` WHERE `bill_id` = ?", (bill_id,))
         
+    def get_tags(self):
+        result = self.cursor.execute("SELECT title, price FROM tags").fetchall()
+        set = []
+        for title, price in result:
+            set.append([title, price])
+        return set
+    
+    def get_price(self, title):
+        result = self.cursor.execute("SELECT price FROM tags WHERE title = ?", (title,)).fetchone()
+        return result[0]
+        
     def get_billing_tag(self, user_id):
         result = self.cursor.execute("SELECT tag FROM `check` WHERE `user_id` = ?", (user_id,)).fetchone()
         if not bool(len(result)):

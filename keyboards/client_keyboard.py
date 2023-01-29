@@ -1,4 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
+from instances import db
 import sqlite3, applogger
 
 logger = applogger.get_logger(__name__)
@@ -16,12 +17,9 @@ back_button = InlineKeyboardMarkup().add(InlineKeyboardButton(text="Back", callb
 
 
 def generate_tag_keyboard():
-    db = sqlite3.connect('data.db')
-    sql = db.cursor()
     buttons = InlineKeyboardMarkup()
-    for id, title, price in sql.execute("SELECT id,title,price FROM tags"):
+    for title, price in db.get_tags():
         buttons.add(InlineKeyboardButton(f'{title} — {price}₽', callback_data="tag_"+title))
-    sql.close()
     return buttons.add(back)
 
 def unban_payment_keyboard(url="", bill=""):

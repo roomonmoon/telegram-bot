@@ -51,23 +51,28 @@ async def process_show_tags_callback(query: types.CallbackQuery):
     await query.message.edit_text("Avaible tags", reply_markup=generate_tag_keyboard())
 
 async def process_catch_tag_callback(query: types.CallbackQuery):
-    bill = p2p.bill(amount=1, lifetime=15)
-    tag = str(query.data[4:])
-    db.add_billing_check(query.from_user.id, bill.bill_id, tag)
-    await query.message.edit_text(f"{tag}", reply_markup=tag_payment_keyboard(bill.pay_url, str(bill.bill_id)))
+    if bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id) == "member":
+        title = str(query.data[4:])
+        price = db.get_price(title)
+        bill = p2p.bill(amount=price, lifetime=15)
+        db.add_billing_check(query.from_user.id, bill.bill_id, title)
+        await query.message.edit_text(f"{title}", reply_markup=tag_payment_keyboard(bill.pay_url, str(bill.bill_id)))
+    else:
+        await query.message.edit_text("You're not a member! Please join in the chat.", reply_markup=start_keyboard)
 
 async def process_tag_check_billing_status(query: types.CallbackQuery):
     bill = str(query.data[7:])
     info = db.get_billing_check(bill)
-    tag = db.get_billing_tag(query.from_user.id)
+    title = db.get_billing_tag(query.from_user.id)
+    price = db.get_price(title)
     if info != False:
         if str(p2p.check(bill_id=bill).status) == "PAID":
             await query.answer("You're succesfully paid.")
             db.remove_billing_check(bill)
         else:
-            print(f'{tag}')
+            print(f'{title} not payd! Please pay {price}!')
             await query.answer("You haven't paid yet.")
-
+    
 
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(process_start_command, commands=['start']) 
