@@ -51,7 +51,8 @@ async def process_show_tags_callback(query: types.CallbackQuery):
     await query.message.edit_text("Avaible tags", reply_markup=generate_tag_keyboard())
 
 async def process_catch_tag_callback(query: types.CallbackQuery):
-    if await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id) == "member":
+    user = await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
+    if user['status'] == "member":
         title = str(query.data[4:])
         price = db.get_price(title)
         bill = p2p.bill(amount=price, lifetime=15)
@@ -61,12 +62,19 @@ async def process_catch_tag_callback(query: types.CallbackQuery):
         await query.message.edit_text("You're not a member! Please join in the chat.", reply_markup=start_keyboard)
 
 async def process_tag_check_billing_status(query: types.CallbackQuery):
+    user = await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
+    print(user['status'])
     bill = str(query.data[7:])
     info = db.get_billing_check(bill)
     title = db.get_billing_tag(query.from_user.id)
     price = db.get_price(title)
     if info != False:
-        if str(p2p.check(bill_id=bill).status) == "PAID":
+        if str(p2p.check(bill_id=bill).status) == "WAITING":
+            set_admin = await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_pin_messages=True)
+            print(set_admin, user['status'])
+            # admin_custom_title = await bot.set_chat_administrator_custom_title(CHANNEL_CHAT_ID, query.from_user.id, custom_title=str(title))
+            # print(set_admin)
+            # print(admin_custom_title)
             await query.answer("You're succesfully paid.")
             db.remove_billing_check(bill)
         else:
