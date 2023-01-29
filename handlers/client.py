@@ -51,7 +51,7 @@ async def process_show_tags_callback(query: types.CallbackQuery):
     await query.message.edit_text("Avaible tags", reply_markup=generate_tag_keyboard())
 
 async def process_catch_tag_callback(query: types.CallbackQuery):
-    if bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id) == "member":
+    if await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id) == "member":
         title = str(query.data[4:])
         price = db.get_price(title)
         bill = p2p.bill(amount=price, lifetime=15)
