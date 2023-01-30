@@ -48,9 +48,12 @@ class Database():
             if not bool(len(result)):
                 return False
             return result[0]
+        
+    def remove_user_with_tag(self, user_id):
+        return self.cursor.execute("DELETE FROM `users` WHERE `user_id` = ?", (user_id,))
 
 
-    def cleeaner(self):
+    def get_user_with_timeleft(self):
         with self.connection:
-            return self.cursor.execute(f"SELECT user_id FROM `users` WHERE `timeleft` > {time()}").fetchall()
+            return self.cursor.execute(f"SELECT user_id FROM `users` WHERE `timeleft` < {time()}").fetchall()
             

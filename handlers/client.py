@@ -6,6 +6,18 @@ from keyboards import start_keyboard, back_button, unban_payment_keyboard, gener
 
 # logger = applogger.get_logger(__name__)
 
+
+async def example():
+    result = db.get_user_with_timeleft()
+    if result != []:
+        for item in result:
+            await bot.promote_chat_member(CHANNEL_CHAT_ID, item[0])
+            db.remove_user_with_tag(item[0])
+            print(f'{item[0]} was demote.')
+    else:
+        print('Nothing to do')
+        
+
 async def process_cancel_callback(query: types.CallbackQuery):
     db.remove_billing_check(bill_id=query.data[6:])
     await query.message.edit_text("Start keyboard", reply_markup=start_keyboard)
