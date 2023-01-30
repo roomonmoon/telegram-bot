@@ -1,3 +1,4 @@
+from time import time
 import sqlite3
 
 class Database():
@@ -11,7 +12,7 @@ class Database():
             if not bool(len(request)):
                 result = self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`) VALUES (?,?,?)", (user_id, bill_id, tag,))
             else:
-                request = self.cursor.execute("DELETE FROM `check` WHERE `user_id` = ?", (user_id,))
+                self.cursor.execute("DELETE FROM `check` WHERE `user_id` = ?", (user_id,))
                 return self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`) VALUES (?,?,?)", (user_id, bill_id, tag,))
                 
     def get_billing_check(self, bill_id):
@@ -26,7 +27,6 @@ class Database():
         
     def add_user_with_tag(self, user_id, tag):
         with self.connection:
-            from time import time
             return self.cursor.execute("INSERT INTO `users` (`user_id`, `tag`, `timestart`, `timeleft`) VALUES (?,?,?,?)", (user_id, tag, time(), f"{time()+2592000}",))
         
     def get_tags(self):
@@ -48,3 +48,9 @@ class Database():
             if not bool(len(result)):
                 return False
             return result[0]
+
+
+    def cleeaner(self):
+        with self.connection:
+            return self.cursor.execute(f"SELECT user_id FROM `users` WHERE `timeleft` > {time()}").fetchall()
+            

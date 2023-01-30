@@ -15,7 +15,8 @@ import sqlite3
 
 # print(db.get_price(title="Father"))
 
-print(db.add_user_with_tag(123, "Хуила"))
+for user_id in db.cleeaner():
+    print(user_id[0])
 
 # permission = ("can_send_messages: = None", "can_send_media_messages: = None", "can_send_polls: = None", "can_send_other_messages: = None", "can_add_web_page_previews: = None", "can_change_info: = None", "can_invite_users: = None", "can_pin_messages: = None", "can_manage_topics: = None")
 # print(permission[0])
