@@ -24,19 +24,27 @@ class Database():
         with self.connection:
             return self.cursor.execute("DELETE FROM `check` WHERE `bill_id` = ?", (bill_id,))
         
+    def add_user_with_tag(self, user_id, tag):
+        with self.connection:
+            from time import time
+            return self.cursor.execute("INSERT INTO `users` (`user_id`, `tag`, `timestart`, `timeleft`) VALUES (?,?,?,?)", (user_id, tag, time(), f"{time()+2592000}",))
+        
     def get_tags(self):
-        result = self.cursor.execute("SELECT title, price FROM tags").fetchall()
-        set = []
-        for title, price in result:
-            set.append([title, price])
-        return set
+        with self.connection:
+            result = self.cursor.execute("SELECT title, price FROM tags").fetchall()
+            set = []
+            for title, price in result:
+                set.append([title, price])
+            return set
     
     def get_price(self, title):
-        result = self.cursor.execute("SELECT price FROM tags WHERE title = ?", (title,)).fetchone()
-        return result[0]
+        with self.connection:
+            result = self.cursor.execute("SELECT price FROM tags WHERE title = ?", (title,)).fetchone()
+            return result[0]
         
     def get_billing_tag(self, user_id):
-        result = self.cursor.execute("SELECT tag FROM `check` WHERE `user_id` = ?", (user_id,)).fetchone()
-        if not bool(len(result)):
-            return False
-        return result[0]
+        with self.connection:
+            result = self.cursor.execute("SELECT tag FROM `check` WHERE `user_id` = ?", (user_id,)).fetchone()
+            if not bool(len(result)):
+                return False
+            return result[0]
