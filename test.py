@@ -4,5 +4,12 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 import sqlite3
 import time
 
-print(time.time())
-print(db.remove_timeout_bill())
+@message_handler
+
+
+
+def main():
+    executor.start_polling(dp, skip_updates=True)
+
+if __name__ == "__main__":
+    main()

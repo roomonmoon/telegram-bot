@@ -1,18 +1,19 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 from instances import db
-import sqlite3, applogger
+import applogger
 
 logger = applogger.get_logger(__name__)
 
-unban = InlineKeyboardButton('Unban', callback_data='check_ban_status')
-tags = InlineKeyboardButton('Tags', callback_data='tags')
 back = InlineKeyboardButton('Back', callback_data='start')
-
-start_keyboard = InlineKeyboardMarkup()
-start_keyboard.add(unban).add(tags)
-
 back_button = InlineKeyboardMarkup().add(InlineKeyboardButton(text="Back", callback_data="start"))
 
+def start_client_keyboard():
+    unban = InlineKeyboardButton('Unban', callback_data='check_ban_status')
+    tags = InlineKeyboardButton('Tags', callback_data='tags')
+    reset = InlineKeyboardButton('Reset', callback_data='reset')
+    keyboard = InlineKeyboardMarkup()
+    keyboard.add(unban).add(tags).add(reset)
+    return keyboard
 
 
 

@@ -1,17 +1,17 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from instances import dp, bot
+from instances import dp
 from aiogram.utils import executor
 from handlers import client, admin
 
 
 
 def handlers():
-    client.register_handlers_client(dp)
     admin.register_handlers_admin(dp)
+    client.register_handlers_client(dp)
 
 def main():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(client.example, "interval", seconds=15 )
+    scheduler.add_job(client.schedule, "interval", seconds=15)
     scheduler.start()
 
     handlers()
