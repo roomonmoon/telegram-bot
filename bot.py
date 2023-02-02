@@ -11,7 +11,7 @@ def handlers():
 
 def main():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(client.example, "interval", seconds=60)
+    scheduler.add_job(client.example, "interval", seconds=15 )
     scheduler.start()
 
     handlers()

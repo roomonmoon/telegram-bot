@@ -4,12 +4,10 @@ from aiogram import Bot, Dispatcher
 from aiogram.bot.api import TelegramAPIServer
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from pyqiwip2p import QiwiP2P
-from pyqiwip2p.p2p_types import QiwiCustomer, QiwiDatetime, PaymentMethods
 from db import Database
 
 
 logger = applogger.get_logger(__name__)
-
 storage = MemoryStorage()
 
 CHANNEL_CHAT_ID = os.getenv('CHANNEL_CHAT_ID')

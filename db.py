@@ -10,11 +10,12 @@ class Database():
         with self.connection:
             request = self.cursor.execute("SELECT * FROM `check` WHERE `user_id` = ?", (user_id,)).fetchmany(1)
             if not bool(len(request)):
-                result = self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`) VALUES (?,?,?)", (user_id, bill_id, tag,))
+                result = self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`, `time`) VALUES (?,?,?,?)", (user_id, bill_id, tag, time()))
             else:
                 self.cursor.execute("DELETE FROM `check` WHERE `user_id` = ?", (user_id,))
-                return self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`) VALUES (?,?,?)", (user_id, bill_id, tag,))
+                return self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`, `time`) VALUES (?,?,?,?)", (user_id, bill_id, tag, time()))
                 
+
     def get_billing_check(self, bill_id):
         result = self.cursor.execute("SELECT * FROM `check` WHERE `bill_id` = ?", (bill_id,)).fetchmany()
         if not bool(len(result)):
@@ -56,4 +57,6 @@ class Database():
     def get_user_with_timeleft(self):
         with self.connection:
             return self.cursor.execute(f"SELECT user_id FROM `users` WHERE `timeleft` < {time()}").fetchall()
-            
+    
+    def remove_timeout_bill(self):
+        return self.cursor.execute(f"DELETE FROM `check` WHERE `time` + {60} < {time()}").fetchall()

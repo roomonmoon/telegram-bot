@@ -8,14 +8,14 @@ from keyboards import start_keyboard, back_button, unban_payment_keyboard, gener
 
 
 async def example():
-    result = db.get_user_with_timeleft()
-    if result != []:
-        for item in result:
-            await bot.promote_chat_member(CHANNEL_CHAT_ID, item[0])
-            db.remove_user_with_tag(item[0])
-            print(f'{item[0]} was demote.')
-    else:
-        print('Nothing to do')
+    print(db.remove_timeout_bill())
+    if db.get_user_with_timeleft() != []:
+        for user in db.get_user_with_timeleft():
+            await bot.promote_chat_member(CHANNEL_CHAT_ID, user[0])
+            db.remove_user_with_tag(user[0])
+            print(f'{user[0]} was demote.')
+
+
         
 
 async def process_cancel_callback(query: types.CallbackQuery):
@@ -36,7 +36,7 @@ async def process_check_ban_status_callback(query: types.CallbackQuery):
     if chatStatus['status'] == 'kicked' or channelStatus['status'] == 'kicked':  
         await query.message.edit_text("You're was kicked from the channel", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Payment", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
     else:
-        await bot.send_message(query.from_user.id, "You're haven't ban in our channel", reply_markup=back_button)
+        await query.message.edit_text("You're haven't ban in our channel", reply_markup=back_button)
 
 
 async def process_unban_callback(query: types.CallbackQuery):
