@@ -43,6 +43,10 @@ class Database():
         with self.connection:
             return self.cursor.execute("INSERT INTO `users` (`user_id`, `tag`, `timestart`, `timeleft`) VALUES (?,?,?,?)", (user_id, tag, time(), f"{time()+month}",))
         
+    def add_tag(self, title, price):
+        with self.connection:
+            return self.cursor.execute("INSERT INTO `tags` (`title`, `price`) VALUES (?,?)", (title, price,))
+
     def get_tags(self):
         with self.connection:
             result = self.cursor.execute("SELECT title, price FROM tags").fetchall()
