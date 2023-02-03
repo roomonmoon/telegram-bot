@@ -54,10 +54,20 @@ class Database():
             for title, price in result:
                 set.append([title, price])
             return set
-    
+        
+    def remove_tag(self, title):
+        with self.connection:
+            if not bool(len(self.cursor.execute("SELECT * FROM `tags` WHERE `title` = ?", (title,)).fetchmany(1))):
+                return False
+            else:
+                self.cursor.execute("DELETE FROM `tags` WHERE `title` = ?", (title,))
+                return True
+            
+            
+        
     def get_price(self, title):
         with self.connection:
-            result = self.cursor.execute("SELECT price FROM tags WHERE title = ?", (title,)).fetchone()
+            result = self.cursor.execute("SELECT `price` FROM `tags` WHERE `title` = ?", (title,)).fetchone()
             return result[0]
 
         
@@ -68,7 +78,7 @@ class Database():
 
     def get_user_with_timeleft(self):
         with self.connection:
-            return self.cursor.execute(f"SELECT user_id FROM `users` WHERE `timeleft` < {time()}").fetchall()
+            return self.cursor.execute(f"SELECT `user_id` FROM `users` WHERE `timeleft` < {time()}").fetchall()
     
     def add_admins(self, user_id, fullname):
         with self.connection:

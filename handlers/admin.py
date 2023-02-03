@@ -11,6 +11,9 @@ class AddNewTag(StatesGroup):
     title = State()
     price = State()
 
+class RemoveTag(StatesGroup):
+    title = State()
+
 async def admin_panel(message: types.Message):
     if message.from_user.id in ADMINS:
         await bot.send_message(message.from_user.id, "Admin panel", reply_markup=start_admin_keyboard())
@@ -40,9 +43,30 @@ async def load_price_tag(message: types.Message, state: FSMContext):
                 data['price'] = message.text
                 db.add_tag(data['title'], data['price'])
                 await state.finish()    
+                await message.reply('Tag added successfully.')
             else:
                 await message.reply('Error value. Please input the digital price NOT TEXT')
                 await AddNewTag.price.set()
+    else:
+        await bot.send_message(message.from_user.id, "You're not admin.")
+
+async def start_removeTag(query: types.CallbackQuery):
+    if query.from_user.id in ADMINS:
+        await RemoveTag.title.set()
+        await query.message.answer("Send me Title of Tag")
+    else:
+        await bot.send_message(query.from_user.id, "You're not admin.")
+
+async def remove_Tag(message: types.Message, state: FSMContext):
+    if message.from_user.id in ADMINS:
+        async with state.proxy() as data:
+            data['title'] = message.text
+            if db.remove_tag(data['title']) == True:
+                await bot.send_message(message.from_user.id, "It was delete")
+                await state.finish()
+            else:
+                await bot.send_message(message.from_user.id, "Tags is not exists! Check correct value.")
+                await RemoveTag.title.set()
     else:
         await bot.send_message(message.from_user.id, "You're not admin.")
 
@@ -51,4 +75,9 @@ def register_handlers_admin(dp : Dispatcher):
     dp.register_callback_query_handler(start_ANT, text="newtag", state=None)
     dp.register_message_handler(load_title_tag, state=AddNewTag.title)
     dp.register_message_handler(load_price_tag, state=AddNewTag.price)
+
+    dp.register_callback_query_handler(start_removeTag, state=None)
+    dp.register_message_handler(remove_Tag, state=RemoveTag.title)
+
+    
     dp.register_message_handler(admin_panel, commands=['moderator', 'admin'])

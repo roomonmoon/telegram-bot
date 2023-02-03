@@ -4,12 +4,4 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 import sqlite3
 import time
 
-@message_handler
-
-
-
-def main():
-    executor.start_polling(dp, skip_updates=True)
-
-if __name__ == "__main__":
-    main()
+db.remove_tag(title="Босс")
