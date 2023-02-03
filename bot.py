@@ -6,8 +6,8 @@ from handlers import client, admin
 
 
 def handlers():
-    admin.register_handlers_admin(dp)
     client.register_handlers_client(dp)
+    admin.register_handlers_admin(dp)
 
 def main():
     scheduler = AsyncIOScheduler()
