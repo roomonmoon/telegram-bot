@@ -4,4 +4,4 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 import sqlite3
 import time
 
-db.remove_tag(title="Босс")
+print(db.get_users()[0])

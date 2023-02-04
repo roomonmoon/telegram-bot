@@ -76,7 +76,11 @@ async def remove_Tag(message: types.Message, state: FSMContext):
         await bot.send_message(message.from_user.id, "You're not admin.")
 
 
-
+async def show_list_prisoners(query: types.CallbackQuery):
+    if query.from_user.id in ADMINS:
+        await query.message.reply(f"{db.get_users()}") 
+    else:
+        await bot.send_message(query.from_user.id, "You're not admin.")
 
 
 
@@ -96,6 +100,7 @@ async def cancel_handler(message: types.Message, state: FSMContext):
 def register_handlers_admin(dp : Dispatcher): 
     dp.register_message_handler(cancel_handler, state="*", commands=['cancel'])
     dp.register_message_handler(cancel_handler, Text(equals="cancel", ignore_case=True), state="*")
+    dp.register_callback_query_handler(show_list_prisoners, text="listusers")
 
     dp.register_callback_query_handler(start_ANT, text="addnewtag", state=None)
     dp.register_message_handler(load_title_tag, state=AddNewTag.title)
@@ -103,6 +108,7 @@ def register_handlers_admin(dp : Dispatcher):
 
     dp.register_callback_query_handler(start_removeTag, state=None)
     dp.register_message_handler(remove_Tag, state=RemoveTag.title)
+
 
     
     dp.register_message_handler(admin_panel, commands=['moderator', 'admin'])

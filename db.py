@@ -47,6 +47,10 @@ class Database():
         with self.connection:
             return self.cursor.execute("INSERT INTO `tags` (`title`, `price`) VALUES (?,?)", (title, price,))
 
+    def get_users(self):
+        with self.connection:
+            return self.cursor.execute("SELECT * FROM `users`").fetchall()
+
     def get_tags(self):
         with self.connection:
             result = self.cursor.execute("SELECT title, price FROM tags").fetchall()
