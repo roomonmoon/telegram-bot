@@ -78,7 +78,15 @@ async def remove_Tag(message: types.Message, state: FSMContext):
 
 async def show_list_prisoners(query: types.CallbackQuery):
     if query.from_user.id in ADMINS:
-        await query.message.reply(f"{db.get_users()}") 
+        request = db.get_users()
+        for row in request:
+            response = {
+                "user_id": row[0],
+                "user_tag": row[1],
+                "user_starttime": row[2],
+                "user_lefttime": row[3],    
+            }
+            await query.message.reply(f"{response}") 
     else:
         await bot.send_message(query.from_user.id, "You're not admin.")
 
