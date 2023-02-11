@@ -6,7 +6,7 @@ from handlers import client, admin
 
 
 def handlers():
-    client.register_handlers_client(dp)
+    client.register_handlers_client(dp) 
     admin.register_handlers_admin(dp)
 
 def main():

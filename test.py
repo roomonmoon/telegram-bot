@@ -3,5 +3,9 @@ from instances import db, dp
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 import sqlite3
 import time
+import templates
 
-print(db.get_users()[0])
+request = db.get_users()
+
+for row in range(len(request)):
+    print(row)
