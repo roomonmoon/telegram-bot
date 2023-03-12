@@ -1,10 +1,12 @@
 from aiogram import types, Dispatcher
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputFile
 from instances import bot, p2p, db, CHANNEL_ID, CHANNEL_CHAT_ID
 from keyboards import start_client_keyboard, back_button, unban_payment_keyboard, generate_tag_keyboard, tag_payment_keyboard
 
+import templates
 
 # logger = applogger.get_logger(__name__)
+
 
 
 async def schedule():
@@ -17,41 +19,44 @@ async def schedule():
 
 async def process_reset_callback(query: types.CallbackQuery):
     db.remove_user_with_tag(query.from_user.id)
-    await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
-    await query.message.edit_text("RESET WAS COMPLETE", reply_markup=start_client_keyboard())        
+    await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id)     
+    await query.message.edit_caption("RESET WAS COMPLETE", reply_markup=start_client_keyboard())   
 
 async def process_cancel_callback(query: types.CallbackQuery):
     db.remove_billing_check(bill_id=query.data[6:])
-    await query.message.edit_text("Start keyboard", reply_markup=start_client_keyboard())
+    await query.message.edit_caption(templates.GREETINGS, reply_markup=start_client_keyboard())
 
 async def process_start_command(message: types.Message):
-    await message.answer("Start keyboard", reply_markup=start_client_keyboard())
+    await bot.send_photo(
+        message.from_user.id, 
+        InputFile(r'C:\Users\Admin\Documents\Projects\PYTHON\telegram-bot\images\menu.jpg'), 
+        caption=templates.GREETINGS, 
+        reply_markup=start_client_keyboard()
+        )
 
 async def process_start_callback(query: types.CallbackQuery):
-    await query.message.edit_text('Start keyboard', reply_markup=start_client_keyboard())
+    await query.message.edit_caption(templates.GREETINGS, reply_markup=start_client_keyboard())
 
 async def process_check_ban_status_callback(query: types.CallbackQuery):
     channelStatus = await bot.get_chat_member(chat_id=CHANNEL_ID, user_id=query.from_user.id)
     chatStatus = await bot.get_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
-    print("Channel: ", channelStatus['status'])
-    print("Chat: ", chatStatus['status'])
     if chatStatus['status'] == 'kicked' or channelStatus['status'] == 'kicked':  
-        await query.message.edit_text("You're was kicked from the channel", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Payment", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
+        await query.message.edit_caption("Выперли тебя браток. Ну ты не серчай, щас подтянем мазу за тебя!", reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Payment", callback_data="unban")).add(InlineKeyboardButton(text="Back", callback_data="start")))
     else:
-        await query.message.edit_text("You're haven't ban in our channel", reply_markup=back_button)
+        await query.message.edit_caption("Всё пучком, нет тебя в чёрном списке. Живи-кайфуй!", reply_markup=back_button)
 
 
 async def process_unban_callback(query: types.CallbackQuery):
         bill = p2p.bill(amount=1, lifetime=15)
         db.add_billing_check(query.from_user.id, bill.bill_id, None)    
-        await query.message.edit_text("Please, make pay and then hold check button. You'll unban in our chat.", reply_markup=unban_payment_keyboard(url=bill.pay_url, bill=str(bill.bill_id)))
+        await query.message.edit_caption("Please, make pay and then hold check button. You'll unban in our chat.", reply_markup=unban_payment_keyboard(url=bill.pay_url, bill=str(bill.bill_id)))
 
 
 async def process_check_billing_status(query: types.CallbackQuery):
     bill = str(query.data[6:])
     info = db.get_billing_check(bill)
     if info != False:
-        if str(p2p.check(bill_id=bill).status) == "PAID":
+        if str(p2p.check(bill_id=bill).status) == "WAITING":
             await bot.unban_chat_member(chat_id=CHANNEL_ID, user_id=query.from_user.id)
             await bot.unban_chat_member(chat_id=CHANNEL_CHAT_ID, user_id=query.from_user.id)
             db.remove_billing_check(bill)
@@ -62,19 +67,18 @@ async def process_check_billing_status(query: types.CallbackQuery):
 
 
 async def process_show_tags_callback(query: types.CallbackQuery):
-    await query.message.edit_text("Avaible tags", reply_markup=generate_tag_keyboard())
+    await query.message.edit_caption("Avaible tags", reply_markup=generate_tag_keyboard())
 
 async def process_catch_tag_callback(query: types.CallbackQuery):
     user = await bot.get_chat_member(CHANNEL_CHAT_ID, query.from_user.id)
-    print(user['status'])
     if user['status'] == "member" or "administrator" or "restricted":
         title = str(query.data[4:])
         price = db.get_price(title)
         bill = p2p.bill(amount=price, lifetime=15)
         db.add_billing_check(query.from_user.id, bill.bill_id, title)
-        await query.message.edit_text(f"{title}", reply_markup=tag_payment_keyboard(bill.pay_url, str(bill.bill_id)))
+        await query.message.edit_caption(f"{title}", reply_markup=tag_payment_keyboard(bill.pay_url, str(bill.bill_id)))
     else:
-        await query.message.edit_text("You're not a member! Please join in the chat.", reply_markup=start_client_keyboard())
+        await query.message.edit_caption("You're not a member! Please join in the chat.", reply_markup=start_client_keyboard())
 
 async def process_tag_check_billing_status(query: types.CallbackQuery):
     bill = str(query.data[7:])
@@ -82,12 +86,12 @@ async def process_tag_check_billing_status(query: types.CallbackQuery):
     title = db.get_billing_tag(query.from_user.id)
     price = db.get_price(title)
     if info != False:
-        if str(p2p.check(bill_id=bill).status) == "PAID":
+        if str(p2p.check(bill_id=bill).status) == "WAITING":
             await bot.promote_chat_member(CHANNEL_CHAT_ID, query.from_user.id, can_manage_chat=True)
             await bot.set_chat_administrator_custom_title(CHANNEL_CHAT_ID, query.from_user.id, custom_title=str(title))
             db.add_user_with_tag(query.from_user.id, title)
             db.remove_billing_check(bill)
-            await query.message.edit_text(f"You're succesfully paid. Now you're {title}! My congratulations.", reply_markup=start_client_keyboard())
+            await query.message.edit_caption(f"You're succesfully paid. Now you're {title}! My congratulations.", reply_markup=start_client_keyboard())
         else:
             await query.answer(f"You haven't paid yet. Please pay {price}₽!")
     
