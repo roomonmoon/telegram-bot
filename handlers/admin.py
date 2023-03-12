@@ -1,21 +1,24 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram import types, Dispatcher
-from instances import bot, db
 
 from keyboards.admin_keyboard import start_admin_keyboard, cancel, removeKeyboard
+from instances import bot, db
 
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 ADMINS = [446776902, 5277925980]
+
 
 class AddNewTag(StatesGroup):
     title = State()
     price = State()
 
+
 class RemoveTag(StatesGroup):
     title = State()
+    
 
 async def admin_panel(message: types.Message):
     if message.from_user.id in ADMINS:
