@@ -5,6 +5,7 @@ month = 2592000
 timeout = 900
 
 class Database():
+
     def __init__(self, db_file):
         self.connection = sqlite3.connect(db_file) 
         self.cursor = self.connection.cursor()
@@ -18,7 +19,6 @@ class Database():
                 self.cursor.execute("DELETE FROM `check` WHERE `user_id` = ?", (user_id,))
                 return self.cursor.execute("INSERT INTO `check` (`user_id`, `bill_id`, `tag`, `time`) VALUES (?,?,?,?)", (user_id, bill_id, tag, time()))
                 
-
     def get_billing_check(self, bill_id):
         result = self.cursor.execute("SELECT * FROM `check` WHERE `bill_id` = ?", (bill_id,)).fetchmany()
         if not bool(len(result)):
@@ -49,7 +49,7 @@ class Database():
 
     def get_users(self):
         with self.connection:
-            return self.cursor.execute("SELECT * FROM `users`").fetchall()
+            return self.connection.execute("SELECT * FROM `users`").fetchall()
 
     def get_tags(self):
         with self.connection:
@@ -66,19 +66,15 @@ class Database():
             else:
                 self.cursor.execute("DELETE FROM `tags` WHERE `title` = ?", (title,))
                 return True
-            
-            
-        
+     
     def get_price(self, title):
         with self.connection:
             result = self.cursor.execute("SELECT `price` FROM `tags` WHERE `title` = ?", (title,)).fetchone()
             return result[0]
-
         
     def remove_user_with_tag(self, user_id):
         with self.connection:
             return self.cursor.execute("DELETE FROM `users` WHERE `user_id` = ?", (user_id,))
-
 
     def get_user_with_timeleft(self):
         with self.connection:

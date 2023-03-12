@@ -4,4 +4,10 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 import sqlite3
 import time
 
-print(db.get_users()[0])
+
+
+request = db.get_users()
+
+for item in request:
+    print(item)
+    
