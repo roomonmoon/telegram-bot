@@ -8,7 +8,6 @@ import templates
 # logger = applogger.get_logger(__name__)
 
 
-
 async def schedule():
     db.remove_timeout_bill()
     if db.get_user_with_timeleft() != []:
